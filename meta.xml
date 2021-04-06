@@ -1,0 +1,17 @@
+<meta>
+	<info author="!Patrick" name="pAttach" type="script" version="1.1.2"/>
+    <min_mta_version client="1.5.8-0.20704" />
+	<oop>true</oop>
+	
+	<script src="client.lua"  type="client" />
+	<script src="exports.lua" type="shared" />
+	
+	<export function="attach"            type="shared" />
+	<export function="detach"            type="shared" />
+	<export function="detachAll"         type="shared" />
+	<export function="setPositionOffset" type="shared" />
+	<export function="setRotationOffset" type="shared" />
+	<export function="isAttached"        type="shared" />
+	<export function="getDetails"        type="shared" />
+	<export function="invisibleAll"      type="shared" />
+</meta>
