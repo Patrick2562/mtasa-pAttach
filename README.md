@@ -6,7 +6,7 @@ This resource doesn't match with well known bone_attach, you can not use the sam
 
 # Performance Comparison
 \- There is not so much similiar resources but I will run some performance tests on them.
-CPU usages (Ryzen 5 2600), streamed-in/out attached objects to a ped, on default MTA server with play mod.
+CPU usages (Ryzen 5 2600), streamed-in/out attached objects to a ped, on default MTA server with play gamemode.
 
 | Objects count | pAttach (in_stream) | pAttach (out_of_stream) | attachToBones (in_stream) | attachToBones (out_of_stream) | bone_attach (in_stream) | bone_attach (out_of_stream) |
 | :------------ | :-----------------: | :---------------------: | :-----------------------: | :---------------------------: | :---------------------: | :-------------------------: |
