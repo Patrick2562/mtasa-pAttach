@@ -1,9 +1,9 @@
 --[[
-  _____      _        _      _    
- |  __ \    | |      (_)    | |   
+  _____      _        _      _
+ |  __ \    | |      (_)    | |
  | |__) |_ _| |_ _ __ _  ___| | __
  |  ___/ _` | __| '__| |/ __| |/ /
- | |  | (_| | |_| |  | | (__|   < 
+ | |  | (_| | |_| |  | | (__|   <
  |_|   \__,_|\__|_|  |_|\___|_|\_\
 
  -- https://github.com/Patrick2562/mtasa-pAttach
@@ -42,13 +42,13 @@ pAttach = {
 		setDimension(element, getDimension(ped))
 		setInterior(element, getInterior(ped))
 		setCollisions(element, false)
-		
+
 		local pedIns = self.pedInstances[ped]
 
 		if not pedIns then
 			pedIns = { count = 1, list = {} }
 			self.pedInstances[ped] = pedIns
-			
+
 			if ped ~= localPlayer then
 				addEventHandler("onClientElementStreamIn",    ped, self.onStreamIn)
 				addEventHandler("onClientElementStreamOut",   ped, self.onStreamOut)
@@ -58,7 +58,7 @@ pAttach = {
 		else
 			pedIns.count = pedIns.count + 1
 		end
-		
+
 		pedIns.list[element] = {
 			element = element,
 			ped     = ped,
@@ -69,7 +69,7 @@ pAttach = {
 			rotMat  = self:calculateRotMat(rx or 0, ry or 0, rz or 0)
 		}
 		self.instances[element] = ped
-		
+
 		if ped == localPlayer or isStreamedIn(ped) then
 			if self.inStreamPeds[ped] then
 				self:refreshRender()
@@ -81,15 +81,15 @@ pAttach = {
 		addEventHandler("onClientElementDestroy", element, self.onElementDestroy)
 		return true
 	end,
-	
+
 	detach = function(self, element)
 		if not self:isAttached(element) then return false end
 
 		local ped    = self.instances[element]
 		local pedIns = self.pedInstances[ped]
-		
+
 		pedIns.count = pedIns.count - 1
-		
+
 		if pedIns.count == 0 then
 			if isElement(ped) then
 				removeEventHandler("onClientElementStreamIn",        ped, self.onStreamIn)
@@ -99,7 +99,7 @@ pAttach = {
 			end
 			self.pedInstances[ped] = nil
 			self:removeFromStream(ped)
-		
+
 		else
 			pedIns.list[element] = nil
 			self:refreshRender()
@@ -174,7 +174,7 @@ pAttach = {
 		end
 		return false
 	end,
-	
+
 	removeFromStream = function(self, ped)
 		if self.inStreamPeds[ped] then
 			if self.pedInstances[ped] then
@@ -188,7 +188,7 @@ pAttach = {
 		end
 		return false
 	end,
-	
+
 
 	onStreamIn = function()
 		pAttach:addToStream(source)
@@ -197,18 +197,18 @@ pAttach = {
 	onStreamOut = function()
 		pAttach:removeFromStream(source)
 	end,
-	
+
 	onDimensionChange = function(old, new)
 		if pAttach.pedInstances[source] then
-			for element in pairs(pAttach.pedInstances[source].list) do 
+			for element in pairs(pAttach.pedInstances[source].list) do
 				setDimension(element, new)
 			end
 		end
 	end,
-	
+
 	onInteriorChange = function(old, new)
 		if pAttach.pedInstances[source] then
-			for element in pairs(pAttach.pedInstances[source].list) do 
+			for element in pairs(pAttach.pedInstances[source].list) do
 				setInterior(element, new)
 			end
 		end
@@ -276,13 +276,13 @@ pAttach = {
 				else
 					boneMat = bMCache[boneid]
 				end
-				
+
 				if boneMat then
 					local bM1X, bM1Y, bM1Z = boneMat[1][1], boneMat[1][2], boneMat[1][3]
 					local bM2X, bM2Y, bM2Z = boneMat[2][1], boneMat[2][2], boneMat[2][3]
 					local bM3X, bM3Y, bM3Z = boneMat[3][1], boneMat[3][2], boneMat[3][3]
 					local bM4X, bM4Y, bM4Z = boneMat[4][1], boneMat[4][2], boneMat[4][3]
-	
+
 					local rotMat = data.rotMat
 					local rM1X, rM1Y, rM1Z = rotMat[1][1], rotMat[1][2], rotMat[1][3]
 					local rM2X, rM2Y, rM2Z = rotMat[2][1], rotMat[2][2], rotMat[2][3]
