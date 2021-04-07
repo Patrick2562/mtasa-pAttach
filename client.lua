@@ -15,6 +15,8 @@ local setMatrix     = setElementMatrix
 local setPosition   = setElementPosition
 local setDimension  = setElementDimension
 local getDimension  = getElementDimension
+local setInterior   = setElementInterior
+local getInterior   = getElementInterior
 local setAlpha      = setElementAlpha
 local getBoneMatrix = getElementBoneMatrix
 local setCollisions = setElementCollisionsEnabled
@@ -30,14 +32,15 @@ pAttach = {
 	pedsProcessedAdded        = false,
 
 	attach = function(self, element, ped, _boneid, ox, oy, oz, rx, ry, rz)
-		boneid = type(_boneid) == "number" and _boneid or (boneIDNames[_boneid] or false)
+		local boneid = type(_boneid) == "number" and _boneid or (boneIDNames[_boneid] or false)
 		assert(isElement(element), "Expected element at argument 1, got "..type(element))
 		assert(isElement(ped), "Expected element at argument 2, got "..type(ped))
-		assert(boneid, "Expected number or Bone-name at argument 3, got "..type(_boneid))
+		assert(boneid, "Expected number or bone-name at argument 3, got "..type(_boneid))
 		if self:isAttached(element) then return false end
 
 		setPosition(element, 0, 0, 10000)
 		setDimension(element, getDimension(ped))
+		setInterior(element, getInterior(ped))
 		setCollisions(element, false)
 		
 		local pedIns = self.pedInstances[ped]
@@ -51,6 +54,7 @@ pAttach = {
 				addEventHandler("onClientElementStreamOut",   ped, self.onStreamOut)
 			end
 			addEventHandler("onClientElementDimensionChange", ped, self.onDimensionChange)
+			addEventHandler("onClientElementInteriorChange",  ped, self.onInteriorChange)
 		else
 			pedIns.count = pedIns.count + 1
 		end
@@ -91,6 +95,7 @@ pAttach = {
 				removeEventHandler("onClientElementStreamIn",        ped, self.onStreamIn)
 				removeEventHandler("onClientElementStreamOut",       ped, self.onStreamOut)
 				removeEventHandler("onClientElementDimensionChange", ped, self.onDimensionChange)
+				removeEventHandler("onClientElementInteriorChange",  ped, self.onInteriorChange)
 			end
 			self.pedInstances[ped] = nil
 			self:removeFromStream(ped)
@@ -197,6 +202,14 @@ pAttach = {
 		if pAttach.pedInstances[source] then
 			for element in pairs(pAttach.pedInstances[source].list) do 
 				setDimension(element, new)
+			end
+		end
+	end,
+	
+	onInteriorChange = function(old, new)
+		if pAttach.pedInstances[source] then
+			for element in pairs(pAttach.pedInstances[source].list) do 
+				setInterior(element, new)
 			end
 		end
 	end,

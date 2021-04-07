@@ -66,10 +66,10 @@ else
 		return triggerClientEvent("pAttach:attach", resourceRoot, element, ...)
 	end
 
-	function detach(element, ...)
+	function detach(element)
 		assert(isElement(element), "Expected element at argument 1, got "..type(element))
 		cache[element] = nil
-		return triggerClientEvent("pAttach:detach", resourceRoot, element, ...)
+		return triggerClientEvent("pAttach:detach", resourceRoot, element)
 	end
 
 	function detachAll(ped)
@@ -131,6 +131,12 @@ else
 				detachAll(source)
 				break
 			end
+		end
+	end)
+
+	addEventHandler("onElementDestroy", root, function()
+		if cache[source] then
+			detach(source)
 		end
 	end)
 end
