@@ -134,6 +134,12 @@ else
     addEventHandler("onElementDestroy", root, function()
         if cache[source] then
             detach(source)
+        elseif getElementType(source) == "ped" then
+			for element, data in pairs(cache) do
+				if data[1] == source then
+					cache[element] = nil
+				end
+			end
         end
     end)
 end
