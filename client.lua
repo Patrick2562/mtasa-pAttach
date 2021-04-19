@@ -23,6 +23,7 @@ local setCollisions = setElementCollisionsEnabled
 local isOnScreen    = isElementOnScreen
 local isElement     = isElement
 local isStreamedIn  = isElementStreamedIn
+local getType       = getElementType
 
 pAttach = {
 	instances                 = {},
@@ -43,15 +44,19 @@ pAttach = {
 		setInterior(element, getInterior(ped))
 		setCollisions(element, false)
 
-		local pedIns = self.pedInstances[ped]
+		local pedIns  = self.pedInstances[ped]
+		local pedType = getType(ped)
 
 		if not pedIns then
-			pedIns = { count = 1, list = {} }
+			pedIns = { count = 1, pedType = pedType, list = {} }
 			self.pedInstances[ped] = pedIns
 
 			if ped ~= localPlayer then
 				addEventHandler("onClientElementStreamIn",    ped, self.onStreamIn)
 				addEventHandler("onClientElementStreamOut",   ped, self.onStreamOut)
+				if pedType == "ped" then
+					addEventHandler("onClientElementDestroy", ped, self.onPedDestroy)
+				end
 			end
 			addEventHandler("onClientElementDimensionChange", ped, self.onDimensionChange)
 			addEventHandler("onClientElementInteriorChange",  ped, self.onInteriorChange)
@@ -96,6 +101,9 @@ pAttach = {
 				removeEventHandler("onClientElementStreamOut",       ped, self.onStreamOut)
 				removeEventHandler("onClientElementDimensionChange", ped, self.onDimensionChange)
 				removeEventHandler("onClientElementInteriorChange",  ped, self.onInteriorChange)
+				if pedIns.pedType == "ped" then
+					removeEventHandler("onClientElementDestroy",     ped, self.onPedDestroy)
+				end
 			end
 			self.pedInstances[ped] = nil
 			self:removeFromStream(ped)
@@ -218,6 +226,10 @@ pAttach = {
 		pAttach:detach(source)
 	end,
 
+	onPedDestroy = function()
+		pAttach:detachAll(source)
+	end,
+
 
 	refreshRender = function(self)
 		local tbl = {}
@@ -327,7 +339,7 @@ pAttach = {
 	end
 }
 
-boneIDNames   = {
+boneIDNames = {
 	["head"]           = 8,
 	["neck"]           = 4,
 	["left-shoulder"]  = 32,

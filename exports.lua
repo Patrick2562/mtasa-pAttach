@@ -108,11 +108,13 @@ else
 	end
 
 	function isAttached(element)
-		return (isElement(element) and cache[element]) and true or false
+		assert(isElement(element), "Expected element at argument 1, got "..type(element))
+		return cache[element] and true or false
 	end
 
 	function getDetails(element)
-		return isAttached(element) and cache[element] or false
+		assert(isElement(element), "Expected element at argument 1, got "..type(element))
+		return cache[element] or false
 	end
 
 
@@ -126,12 +128,7 @@ else
 
 
 	addEventHandler("onPlayerQuit", root, function()
-		for element, data in pairs(cache) do
-			if data[1] == source then
-				detachAll(source)
-				break
-			end
-		end
+		detachAll(source)
 	end)
 
 	addEventHandler("onElementDestroy", root, function()
