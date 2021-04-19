@@ -122,7 +122,7 @@ bool invisibleAll(element Element, bool State)
 | **Element**        | Element which you want to make visible or invisible.    |
 | **State**          | Visibility status. (true = invisible / false = visible) |
 
-**Returns:** Returns true if visibility was successfully changed, false otherwise. (only on client side)
+**Returns:** Returns true if visibility was successfully changed, false otherwise.
 
 
 ## **isAttached**
@@ -136,7 +136,7 @@ bool isAttached(element Element)
 | :----------------- | :------------------------------- |
 | **Element**        | Element which you want to check. |
 
-**Returns:** Returns true if element is already attached, false otherwise. (only on client side)
+**Returns:** Returns true if element is already attached, false otherwise.
 
 
 ## **getDetails**
@@ -150,7 +150,7 @@ table getDetails(element Element)
 | :----------------- | :------------------------------- |
 | **Element**        | Element which you want to check. |
 
-**Returns:** Returns table (order same as attach function's parameters) with details if element exists and attached, false otherwise. (only on client side)
+**Returns:** Returns table (order same as attach function's parameters) with details if element exists and attached, false otherwise.
 
  
 # How to use
