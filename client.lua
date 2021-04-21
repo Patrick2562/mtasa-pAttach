@@ -34,7 +34,7 @@ pAttach = {
 
     attach = function(self, element, ped, _boneid, ox, oy, oz, rx, ry, rz)
         local boneid = type(_boneid) == "number" and _boneid or (boneIDNames[_boneid] or false)
-        assert(isElement(element), "Expected element at argument 1, got "..type(element))
+        assert(isElement(element) and getType(element) ~= "player", "Expected element (except: player) at argument 1, got "..type(element))
         assert(isElement(ped), "Expected element at argument 2, got "..type(ped))
         assert(boneid, "Expected number or bone-name at argument 3, got "..type(_boneid))
         if self:isAttached(element) then return false end

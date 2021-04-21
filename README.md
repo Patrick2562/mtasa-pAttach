@@ -27,7 +27,7 @@ bool attach(element Element, element Ped, int/string Bone [, float xPosOffset = 
 
 | Required arguments | Description                                                                                                   |
 | :----------------- | :------------------------------------------------------------------------------------------------------------ |
-| **Element**        | The element which you want to attach.                                                                         |
+| **Element**        | The element which you want to attach. (Except: player)                                                        |
 | **Ped**            | The ped or player which you want to attach element to.                                                        |
 | **Bone**           | The number (or name what you can find below) of the ped or player's bone which you want to attach element to. |
 
@@ -177,6 +177,10 @@ addCommandHandler("testbackpack", function(player)
 end)
 ```
  
+
+# Known issues
+\- There are desynchronization problems when attaching a player to ped or player.
+
 
 # Bone IDs and Names
 \- You can use the default bone IDs, or the bone-names which makes it easier to use.
