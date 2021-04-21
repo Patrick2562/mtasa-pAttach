@@ -68,9 +68,13 @@ pAttach = {
             element = element,
             ped     = ped,
             boneid  = boneid,
+            _boneid = _boneid,
             ox      = ox or 0,
             oy      = oy or 0,
             oz      = oz or 0,
+            rx      = rx or 0,
+            ry      = ry or 0,
+            rz      = rz or 0,
             rotMat  = self:calculateRotMat(rx or 0, ry or 0, rz or 0)
         }
         self.instances[element] = ped
@@ -134,7 +138,23 @@ pAttach = {
     end,
 
     getDetails = function(self, element)
-        return self:isAttached(element) and self.pedInstances[self.instances[element]].list[element] or false
+        assert(isElement(element), "Expected element at argument 1, got "..type(element))
+        if not self:isAttached(element) then return false end
+        
+        local v = self.pedInstances[self.instances[element]].list[element]
+        return v and { v.element, v.ped, v._boneid, v.ox, v.oy, v.oz, v.rx, v.ry, v.rz } or false
+    end,
+
+    getAttacheds = function(self, ped)
+        assert(isElement(ped), "Expected element at argument 1, got "..type(ped))
+        
+        local list = {}
+        if self.pedInstances[ped] then
+            for element in pairs(self.pedInstances[ped].list) do
+                list[ #list + 1 ] = element
+            end
+        end
+        return list
     end,
 
     setPositionOffset = function(self, element, x, y, z)

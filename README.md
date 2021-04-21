@@ -150,7 +150,21 @@ table getDetails(element Element)
 | :----------------- | :------------------------------- |
 | **Element**        | Element which you want to check. |
 
-**Returns:** Returns table (order same as attach function's parameters) with details if element exists and attached, false otherwise.
+**Returns:** Returns table with details (value order same as attach function's parameters, starts from Ped) if element exists and attached, false otherwise.
+
+
+## **getAttacheds**
+\- This function get attached elements which is attached to ped or player.
+
+```
+table getAttacheds(element Ped)
+```
+
+| Required arguments | Description                                           |
+| :----------------- | :---------------------------------------------------- |
+| **Ped**            | The ped or player to which the elements are attached. |
+
+**Returns:** Returns a table of all the elements attached to the specified ped or player, false otherwise.
 
  
 # How to use

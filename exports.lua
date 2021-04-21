@@ -57,13 +57,17 @@ if isClientSide then
         return pAttach:getDetails(...)
     end
 
+    function getAttacheds(...)
+        return pAttach:getAttacheds(...)
+    end
+
 else
     local cache = {}
 
-    function attach(element, ...)
+    function attach(element, ped, boneid, ox, oy, oz, rx, ry, rz)
         assert(isElement(element), "Expected element at argument 1, got "..type(element))
-        cache[element] = {...}
-        return triggerClientEvent("pAttach:attach", resourceRoot, element, ...)
+        cache[element] = { element, ped, boneid, ox or 0, oy or 0, oz or 0, rx or 0, ry or 0, rz or 0 }
+        return triggerClientEvent("pAttach:attach", resourceRoot, element, ped, boneid, ox, oy, oz, rx, ry, rz)
     end
 
     function detach(element)
@@ -75,7 +79,7 @@ else
     function detachAll(ped)
         assert(isElement(ped), "Expected element at argument 1, got "..type(ped))
         for element, data in pairs(cache) do
-            if data[1] == ped then
+            if data[2] == ped then
                 cache[element] = nil
             end
         end
@@ -84,23 +88,23 @@ else
 
     function setPositionOffset(element, x, y, z)
         assert(isElement(element), "Expected element at argument 1, got "..type(element))
-        cache[element][3] = x or 0
-        cache[element][4] = y or 0
-        cache[element][5] = z or 0
+        cache[element][4] = x or 0
+        cache[element][5] = y or 0
+        cache[element][6] = z or 0
         return triggerClientEvent("pAttach:setPositionOffset", resourceRoot, element, x, y, z)
     end
 
     function setRotationOffset(element, x, y, z)
         assert(isElement(element), "Expected element at argument 1, got "..type(element))
-        cache[element][6] = x or 0
-        cache[element][7] = y or 0
-        cache[element][8] = z or 0
+        cache[element][7] = x or 0
+        cache[element][8] = y or 0
+        cache[element][9] = z or 0
         return triggerClientEvent("pAttach:setRotationOffset", resourceRoot, element, x, y, z)
     end
 
     function invisibleAll(ped, bool)
         for element, data in pairs(cache) do
-            if data[1] == ped then
+            if data[2] == ped then
                 setElementAlpha(element, bool and 0 or 255)
             end
         end
@@ -115,6 +119,18 @@ else
     function getDetails(element)
         assert(isElement(element), "Expected element at argument 1, got "..type(element))
         return cache[element] or false
+    end
+
+    function getAttacheds(ped)
+        assert(isElement(ped), "Expected element at argument 1, got "..type(element))
+
+        local list = {}
+        for element, data in pairs(cache) do
+            if data[2] == ped then
+                list[ #list + 1 ] = element
+            end
+        end
+        return list
     end
 
 
@@ -136,7 +152,7 @@ else
             detach(source)
         elseif getElementType(source) == "ped" then
             for element, data in pairs(cache) do
-                if data[1] == source then
+                if data[2] == source then
                     cache[element] = nil
                 end
             end
