@@ -177,6 +177,9 @@ pAttach = {
         local ped = self.instances[element]
         local ins = self.pedInstances[ped].list[element]
 
+        ins.rx = x or 0
+        ins.ry = y or 0
+        ins.rz = z or 0
         ins.rotMat = self:calculateRotMat(x or 0, y or 0, z or 0)
         return true
     end,
