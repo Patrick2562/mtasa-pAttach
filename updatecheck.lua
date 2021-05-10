@@ -4,7 +4,7 @@ local CHECK_FOR_UPDATES = true -- change this to 'false' if you don't want to ch
 
 
 -- DON'T MODIFY THESE VARIABLES ---------------
-local VERSION = 113
+local VERSION = 114
 -----------------------------------------------
 
 if CHECK_FOR_UPDATES then
