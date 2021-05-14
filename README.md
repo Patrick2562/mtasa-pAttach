@@ -185,60 +185,33 @@ end)
 # Bone IDs and Names
 \- You can use the default bone IDs, or the bone-names which makes it easier to use.
 
-| Bone name          | Description                                                     |
-| :----------------- | :-------------------------------------------------------------- |
-| **backpack**       | You can use this to attach backpackes. (Spine)                  |
-| **weapon**         | You can use this to attach weapons to right hand. (Right wrist) |
-| **head**           | Head                                                            |
-| **neck**           | Neck                                                            |
-| **left-shoulder**  | Left shoulder                                                   |
-| **right-shoulder** | Right shoulder                                                  |
-| **spine**          | Spine                                                           |
-| **pelvis**         | Pelvis                                                          |
-| **left-hip**       | Left hio                                                        |
-| **right-hip**      | Right hip                                                       |
-| **left-elbow**     | Left elbow                                                      |
-| **right-elbow**    | Right elbow                                                     |
-| **left-wrist**     | Left wrist                                                      |
-| **right-wrist**    | Right wrist                                                     |
-| **left-thumb**     | Left thumb                                                      |
-| **right-thumb**    | Right thumb                                                     |
-| **left-hand**      | Left hand                                                       |
-| **right-hand**     | Right hand                                                      |
-| **left-knee**      | Left knee                                                       |
-| **right-knee**     | Right knee                                                      |
-| **left-tankle**    | Left tankle                                                     |
-| **right-tankle**   | Right tankle                                                    |
-| **left-foot**      | Left foot                                                       |
-| **right-foot**     | Right foot                                                      |
-
-| Bone ID | Description       |
-| :------ | :---------------- |
-| **1**   | Pelvis 1          |
-| **2**   | Pelvis            |
-| **3**   | Spine 1           |
-| **4**   | Upper torso       |
-| **5**   | Neck              |
-| **6**   | Head 2            |
-| **7**   | Head 1            |
-| **8**   | Head              |
-| **21**  | Right upper torso |
-| **22**  | Right shoulder    |
-| **23**  | Right elbow       |
-| **24**  | Right wrist       |
-| **25**  | Right hand        |
-| **26**  | Right thumb       |
-| **31**  | Left upper torso  |
-| **32**  | Left shoulder     |
-| **33**  | Left elbow        |
-| **34**  | Left wrist        |
-| **35**  | Left hand         |
-| **36**  | Left thumb        |
-| **41**  | Left hip          |
-| **42**  | Left knee         |
-| **43**  | Left tangle       |
-| **44**  | Left foot         |
-| **51**  | Right hip         |
-| **52**  | Right knee        |
-| **53**  | Right tankle      |
-| **54**  | Right foot        |
+| Bone ID | Bone Name                    | Description        |
+| :-----: | :--------------------------- | :----------------- |
+|  **1**  | **pelvis**                   | Pelvis             |
+|  **2**  | **pelvis2**                  | Pelvis 2           |
+|  **3**  | **spine (OR: backpack)**     | Spine              |
+|  **4**  | **neck**                     | Neck (upper torso) |
+|  **5**  | **neck2**                    | Neck 2             |
+|  **6**  | **head2**                    | Head 2             |
+|  **7**  | **head3**                    | Head 3             |
+|  **8**  | **head**                     | Head               |
+| **21**  | **right-upper-torso**        | Right upper torso  |
+| **22**  | **right-shoulder**           | Right shoulder     |
+| **23**  | **right-elbow**              | Right elbow        |
+| **24**  | **right-wrist (OR: weapon)** | Right wrist        |
+| **25**  | **right-hand**               | Right hand         |
+| **26**  | **right-thumb**              | Right thumb        |
+| **31**  | **left-upper-torso**         | Left upper torso   |
+| **32**  | **left-shoulder**            | Left shoulder      |
+| **33**  | **left-elbow**               | Left elbow         |
+| **34**  | **left-wrist**               | Left wrist         |
+| **35**  | **left-hand**                | Left hand          |
+| **36**  | **left-thumb**               | Left thumb         |
+| **41**  | **left-hip**                 | Left hip           |
+| **42**  | **left-knee**                | Left knee          |
+| **43**  | **left-tankle**              | Left tangle        |
+| **44**  | **left-foot**                | Left foot          |
+| **51**  | **right-hip**                | Right hip          |
+| **52**  | **right-knee**               | Right knee         |
+| **53**  | **right-tankle**             | Right tankle       |
+| **54**  | **right-foot**               | Right foot         |

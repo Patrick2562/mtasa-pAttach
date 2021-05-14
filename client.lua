@@ -34,10 +34,10 @@ pAttach = {
     pedsProcessedAdded        = false,
 
     attach = function(self, element, ped, _boneid, ox, oy, oz, rx, ry, rz)
-        local boneid = type(_boneid) == "number" and _boneid or (boneIDNames[_boneid] or false)
+        local boneid = boneIDNames[_boneid] or tonumber(_boneid) or false
         assert(isElement(element) and getType(element) ~= "player", "Expected element (except: player) at argument 1, got "..type(element))
         assert(isElement(ped), "Expected element at argument 2, got "..type(ped))
-        assert(boneid, "Expected number or bone-name at argument 3, got "..type(_boneid))
+        assert(boneid and boneIDs[boneid], "Expected valid bone-id or bone-name at argument 3, got "..tostring(_boneid)..". Check available bones in README.md")
         if self:isAttached(element) then return false end
 
         setPosition(element, 0, 0, 10000)
@@ -363,32 +363,69 @@ pAttach = {
     end
 }
 
+boneIDs = {
+    [1]  = true,
+    [2]  = true,
+    [3]  = true,
+    [4]  = true,
+    [5]  = true,
+    [6]  = true,
+    [7]  = true,
+    [8]  = true,
+    [21] = true,
+    [22] = true,
+    [23] = true,
+    [24] = true,
+    [25] = true,
+    [26] = true,
+    [31] = true,
+    [32] = true,
+    [33] = true,
+    [34] = true,
+    [35] = true,
+    [36] = true,
+    [41] = true,
+    [42] = true,
+    [43] = true,
+    [44] = true,
+    [51] = true,
+    [52] = true,
+    [53] = true,
+    [54] = true,
+}
+
 boneIDNames = {
-    ["head"]           = 8,
-    ["neck"]           = 4,
-    ["left-shoulder"]  = 32,
-    ["right-shoulder"] = 22,
-    ["spine"]          = 3,
-    ["pelvis"]         = 1,
-    ["left-hip"]       = 41,
-    ["right-hip"]      = 51,
-    ["left-elbow"]     = 33,
-    ["right-elbow"]    = 23,
-    ["left-wrist"]     = 34,
-    ["right-wrist"]    = 24,
-    ["left-thumb"]     = 36,
-    ["right-thumb"]    = 26,
-    ["left-hand"]      = 35,
-    ["right-hand"]     = 25,
-    ["left-knee"]      = 42,
-    ["right-knee"]     = 52,
-    ["left-tankle"]    = 43,
-    ["right-tankle"]   = 53,
-    ["left-foot"]      = 44,
-    ["right-foot"]     = 54,
+    ["pelvis"]            = 1,
+    ["pelvis2"]           = 2,
+    ["spine"]             = 3,
+    ["neck"]              = 4,
+    ["neck2"]             = 5,
+    ["head2"]             = 6,
+    ["head3"]             = 7,
+    ["head"]              = 8,
+    ["right-upper-torso"] = 21,
+    ["right-shoulder"]    = 22,
+    ["right-elbow"]       = 23,
+    ["right-wrist"]       = 24,
+    ["right-hand"]        = 25,
+    ["right-thumb"]       = 26,
+    ["left-upper-torso"]  = 31,
+    ["left-shoulder"]     = 32,
+    ["left-elbow"]        = 33,
+    ["left-wrist"]        = 34,
+    ["left-hand"]         = 35,
+    ["left-thumb"]        = 36,
+    ["left-hip"]          = 41,
+    ["left-knee"]         = 42,
+    ["left-tankle"]       = 43,
+    ["left-foot"]         = 44,
+    ["right-hip"]         = 51,
+    ["right-knee"]        = 52,
+    ["right-tankle"]      = 53,
+    ["right-foot"]        = 54,
     -- extra
-    ["backpack"]       = 3,
-    ["weapon"]         = 24,
+    ["backpack"]          = 3,
+    ["weapon"]            = 24,
 }
 
 addEventHandler("onClientResourceStart", resourceRoot, function()
