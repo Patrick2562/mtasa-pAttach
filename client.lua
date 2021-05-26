@@ -434,7 +434,7 @@ end)
 
 addEvent("pAttach:receiveCache", true)
 addEventHandler("pAttach:receiveCache", resourceRoot, function(cache)
-    for element, data in pairs(cache) do
-        pAttach:attach(element, unpack(data))
+    for _, data in pairs(cache) do
+        pAttach:attach(unpack(data))
     end
 end)
