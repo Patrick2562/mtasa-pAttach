@@ -185,33 +185,33 @@ end)
 # Bone IDs and Names
 \- You can use the default bone IDs, or the bone-names which makes it easier to use.
 
-| Bone ID | Bone Name                    | Description        |
-| :-----: | :--------------------------- | :----------------- |
-|  **1**  | **pelvis**                   | Pelvis             |
-|  **2**  | **pelvis2**                  | Pelvis 2           |
-|  **3**  | **spine (OR: backpack)**     | Spine              |
-|  **4**  | **neck**                     | Neck (upper torso) |
-|  **5**  | **neck2**                    | Neck 2             |
-|  **6**  | **head2**                    | Head 2             |
-|  **7**  | **head3**                    | Head 3             |
-|  **8**  | **head**                     | Head               |
-| **21**  | **right-upper-torso**        | Right upper torso  |
-| **22**  | **right-shoulder**           | Right shoulder     |
-| **23**  | **right-elbow**              | Right elbow        |
-| **24**  | **right-wrist (OR: weapon)** | Right wrist        |
-| **25**  | **right-hand**               | Right hand         |
-| **26**  | **right-thumb**              | Right thumb        |
-| **31**  | **left-upper-torso**         | Left upper torso   |
-| **32**  | **left-shoulder**            | Left shoulder      |
-| **33**  | **left-elbow**               | Left elbow         |
-| **34**  | **left-wrist**               | Left wrist         |
-| **35**  | **left-hand**                | Left hand          |
-| **36**  | **left-thumb**               | Left thumb         |
-| **41**  | **left-hip**                 | Left hip           |
-| **42**  | **left-knee**                | Left knee          |
-| **43**  | **left-tankle**              | Left tangle        |
-| **44**  | **left-foot**                | Left foot          |
-| **51**  | **right-hip**                | Right hip          |
-| **52**  | **right-knee**               | Right knee         |
-| **53**  | **right-tankle**             | Right tankle       |
-| **54**  | **right-foot**               | Right foot         |
+| Bone ID | Bone Name                    | Description                                                                                     |
+| :-----: | :--------------------------- | :---------------------------------------------------------------------------------------------- |
+|  **1**  | **pelvis**                   | Pelvis                                                                                          |
+|  **2**  | **pelvis2**                  | Pelvis 2                                                                                        |
+|  **3**  | **spine (OR: backpack)**     | Spine                                                                                           |
+|  **4**  | **neck**                     | Neck (upper torso)                                                                              |
+|  **5**  | **neck2**                    | Neck 2                                                                                          |
+|  **6**  | **head2**                    | Head 2                                                                                          |
+|  **7**  | **head3**                    | Head 3                                                                                          |
+|  **8**  | **head**                     | Head                                                                                            |
+| **21**  | **right-upper-torso**        | Right upper torso                                                                               |
+| **22**  | **right-shoulder**           | Right shoulder                                                                                  |
+| **23**  | **right-elbow**              | Right elbow                                                                                     |
+| **24**  | **right-wrist (OR: weapon)** | Right wrist                                                                                     |
+| **25**  | **right-hand**               | Right hand (Note: use **right-wrist** instead if you want to attach something to player's hand) |
+| **26**  | **right-thumb**              | Right thumb                                                                                     |
+| **31**  | **left-upper-torso**         | Left upper torso                                                                                |
+| **32**  | **left-shoulder**            | Left shoulder                                                                                   |
+| **33**  | **left-elbow**               | Left elbow                                                                                      |
+| **34**  | **left-wrist**               | Left wrist                                                                                      |
+| **35**  | **left-hand**                | Left hand (Note: use **left-wrist** instead if you want to attach something to player's hand)   |
+| **36**  | **left-thumb**               | Left thumb                                                                                      |
+| **41**  | **left-hip**                 | Left hip                                                                                        |
+| **42**  | **left-knee**                | Left knee                                                                                       |
+| **43**  | **left-tankle**              | Left tangle                                                                                     |
+| **44**  | **left-foot**                | Left foot                                                                                       |
+| **51**  | **right-hip**                | Right hip                                                                                       |
+| **52**  | **right-knee**               | Right knee                                                                                      |
+| **53**  | **right-tankle**             | Right tankle                                                                                    |
+| **54**  | **right-foot**               | Right foot                                                                                      |
