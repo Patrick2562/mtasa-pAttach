@@ -168,12 +168,19 @@ table getAttacheds(element Ped)
 
  
 # How to use
-\- Server sided example to attach backpack (parachute) to player's back.
+\- Server sided example to attach objects (parachute, weapon, hat) to player.
 
 ```lua
-addCommandHandler("testbackpack", function(player)
-    local object = createObject(371, 0, 0, 0)
-    exports.pAttach:attach(object, player, "backpack", 0, -0.15, 0, 90, 0, 0)
+addCommandHandler("testattach", function(player)
+    local weapon = createObject(371, 0, 0, 0)
+    exports.pAttach:attach(weapon, player, "backpack", 0, -0.15, 0, 0, 90, 0)
+
+    local backpack = createObject(3965, 0, 0, 0)
+    exports.pAttach:attach(backpack, player, "weapon")
+
+    local hat = createObject(642, 0, 0, 0)
+    setObjectScale(hat, 0.08)
+    exports.pAttach:attach(hat, player, "head", -0.05, -0.1, 0, 90, 0, -20)
 end)
 ```
  
