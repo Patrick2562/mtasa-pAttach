@@ -120,6 +120,7 @@ pAttach = {
 
         removeEventHandler("onClientElementDestroy", element, self.onElementDestroy)
         self.instances[element] = nil
+        setCollisions(element, true)
         return true
     end,
 
