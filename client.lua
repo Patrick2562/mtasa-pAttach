@@ -283,13 +283,12 @@ pAttach = {
         local spitch, cpitch = sin(ry), cos(ry)
         local sroll,  croll  = sin(rz), cos(rz)
         return {
-            { sroll  * spitch * syaw + croll * cyaw, sroll * cpitch, sroll * spitch * cyaw - croll * syaw },
-            { croll  * spitch * syaw - sroll * cyaw, croll * cpitch, croll * spitch * cyaw + sroll * syaw },
-            { cpitch * syaw, -spitch, cpitch * cyaw }
+            { cpitch*croll - spitch*syaw*sroll, cpitch*sroll + spitch*syaw*croll, -spitch*cyaw },
+            { -cyaw*sroll, cyaw*croll, syaw },
+            { spitch*croll + cpitch*syaw*sroll, spitch*sroll - cpitch*syaw*croll, cpitch*cyaw }
         }
     end,
 
-    -- Modified https://wiki.multitheftauto.com/wiki/AttachElementToBone
     onPedsProcessed = function()
         local boneMatCache = {}
 
@@ -327,27 +326,27 @@ pAttach = {
 
                     setMatrix(element, {
                         {
-                            bM2X * rM1Y + bM1X * rM1X + rM1Z * bM3X,
-                            bM3Y * rM1Z + bM1Y * rM1X + bM2Y * rM1Y,
-                            bM2Z * rM1Y + bM3Z * rM1Z + rM1X * bM1Z,
+                            rM1X * bM1X + rM1Y * bM2X + rM1Z * bM3X,
+                            rM1X * bM1Y + rM1Y * bM2Y + rM1Z * bM3Y,
+                            rM1X * bM1Z + rM1Y * bM2Z + rM1Z * bM3Z,
                             0
                         },
                         {
-                            rM2Z * bM3X + bM2X * rM2Y + rM2X * bM1X,
-                            bM3Y * rM2Z + bM2Y * rM2Y + bM1Y * rM2X,
-                            rM2X * bM1Z + bM3Z * rM2Z + bM2Z * rM2Y,
+                            rM2X * bM1X + rM2Y * bM2X + rM2Z * bM3X,
+                            rM2X * bM1Y + rM2Y * bM2Y + rM2Z * bM3Y,
+                            rM2X * bM1Z + rM2Y * bM2Z + rM2Z * bM3Z,
                             0
                         },
                         {
-                            bM2X * rM3Y + rM3Z * bM3X + rM3X * bM1X,
-                            bM3Y * rM3Z + bM2Y * rM3Y + rM3X * bM1Y,
-                            rM3X * bM1Z + bM3Z * rM3Z + bM2Z * rM3Y,
+                            rM3X * bM1X + rM3Y * bM2X + rM3Z * bM3X,
+                            rM3X * bM1Y + rM3Y * bM2Y + rM3Z * bM3Y,
+                            rM3X * bM1Z + rM3Y * bM2Z + rM3Z * bM3Z,
                             0
                         },
                         {
-                            oz * bM1X + oy * bM2X - ox * bM3X + bM4X,
-                            oz * bM1Y + oy * bM2Y - ox * bM3Y + bM4Y,
-                            oz * bM1Z + oy * bM2Z - ox * bM3Z + bM4Z,
+                            bM4X + ox * bM1X + oy * bM2X + oz * bM3X,
+                            bM4Y + ox * bM1Y + oy * bM2Y + oz * bM3Y,
+                            bM4Z + ox * bM1Z + oy * bM2Z + oz * bM3Z,
                             1
                         }
                     })
