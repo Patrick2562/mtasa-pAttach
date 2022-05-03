@@ -288,7 +288,6 @@ pAttach = {
         }
     end,
 
-    -- Modified https://wiki.multitheftauto.com/wiki/AttachElementToBone
     onPedsProcessed = function()
         local boneMatCache = {}
 
