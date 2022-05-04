@@ -16,7 +16,10 @@
 	<export function="detachAll"         type="shared" />
 	<export function="setPositionOffset" type="shared" />
 	<export function="setRotationOffset" type="shared" />
+	<export function="setPed"            type="shared" />
+	<export function="setBone"           type="shared" />
 	<export function="isAttached"        type="shared" />
+	<export function="setDetails"        type="shared" />
 	<export function="getDetails"        type="shared" />
 	<export function="invisibleAll"      type="shared" />
 	<export function="getAttacheds"      type="shared" />

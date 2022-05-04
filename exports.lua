@@ -44,6 +44,18 @@ if isClientSide then
     addEvent("pAttach:setRotationOffset", true)
     addEventHandler("pAttach:setRotationOffset", resourceRoot, setRotationOffset)
 
+    function setPed(...)
+        return pAttach:setPed(...)
+    end
+    addEvent("pAttach:setPed", true)
+    addEventHandler("pAttach:setPed", resourceRoot, setPed)
+
+    function setBone(...)
+        return pAttach:setBone(...)
+    end
+    addEvent("pAttach:setBone", true)
+    addEventHandler("pAttach:setBone", resourceRoot, setBone)
+
     function invisibleAll(...)
         return pAttach:invisibleAll(...)
     end
@@ -52,6 +64,10 @@ if isClientSide then
 
     function isAttached(...)
         return pAttach:isAttached(...)
+    end
+
+    function setDetails(...)
+        return pAttach:setDetails(...)
     end
 
     function getDetails(...)
@@ -103,6 +119,21 @@ else
         return triggerClientEvent("pAttach:setRotationOffset", resourceRoot, element, x, y, z)
     end
 
+    function setPed(element, ped)
+        assert(isElement(element), "Expected element at argument 1, got "..type(element))
+        assert(isElement(ped), "Expected element at argument 2, got "..type(ped))
+
+        cache[element][2] = ped
+        return triggerClientEvent("pAttach:setPed", resourceRoot, element, ped)
+    end
+
+    function setBone(element, boneid)
+        assert(isElement(element), "Expected element at argument 1, got "..type(element))
+
+        cache[element][3] = boneid
+        return triggerClientEvent("pAttach:setBone", resourceRoot, element, boneid)
+    end
+
     function invisibleAll(ped, bool)
         for element, data in pairs(cache) do
             if data[2] == ped then
@@ -115,6 +146,21 @@ else
     function isAttached(element)
         assert(isElement(element), "Expected element at argument 1, got "..type(element))
         return cache[element] and true or false
+    end
+
+    function setDetails(element, ped, boneid, ox, oy, oz, rx, ry, rz)
+        assert(isElement(element), "Expected element at argument 1, got "..type(element))
+        
+        local details = getDetails(element)
+
+        cache[element] = {
+            element,
+            ped or details[2],
+            boneid or details[3],
+            ox or details[4], oy or details[5], oz or details[6],
+            rx or details[7], ry or details[8], rz or details[9]
+        }
+        return triggerClientEvent("pAttach:setDetails", resourceRoot, element, ped, boneid, ox, oy, oz, rx, ry, rz)
     end
 
     function getDetails(element)

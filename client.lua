@@ -139,6 +139,19 @@ pAttach = {
         return (element and self.instances[element]) and true or false
     end,
 
+    setDetails = function(self, element, ped, _boneid, ox, oy, oz, rx, ry, rz)
+        assert(isElement(element), "Expected element at argument 1, got "..type(element))
+        if not self:isAttached(element) then return false end
+        
+        local details = self:getDetails(element)
+
+        if ped then self:setPed(element, ped) end
+        if _boneid then self:setBone(element, _boneid) end
+        self:setPositionOffset(element, ox or details[4], oy or details[5], oz or details[6])
+        self:setRotationOffset(element, rx or details[7], ry or details[8], rz or details[9])
+        return true
+    end,
+    
     getDetails = function(self, element)
         assert(isElement(element), "Expected element at argument 1, got "..type(element))
         if not self:isAttached(element) then return false end
@@ -183,6 +196,32 @@ pAttach = {
         ins.ry = y or 0
         ins.rz = z or 0
         ins.rotMat = self:calculateRotMat(x or 0, y or 0, z or 0)
+        return true
+    end,
+
+    setBone = function(self, element, _boneid)
+        local boneid = boneIDNames[_boneid] or tonumber(_boneid) or false
+        assert(isElement(element), "Expected element at argument 1, got "..type(element))
+        assert(boneid and boneIDs[boneid], "Expected valid bone-id or bone-name at argument 2, got "..tostring(_boneid)..". Check available bones in README.md")
+        if not self:isAttached(element) then return false end
+
+        local ped = self.instances[element]
+        local ins = self.pedInstances[ped].list[element]
+
+        ins._boneid = _boneid
+        ins.boneid  = boneid
+        return true
+    end,
+
+    setPed = function(self, element, ped)
+        assert(isElement(element), "Expected element at argument 1, got "..type(element))
+        assert(isElement(ped), "Expected element at argument 2, got "..type(ped))
+        if not self:isAttached(element) then return false end
+
+        local details = self:getDetails(element)
+
+        self:detach(element)
+        self:attach(element, ped, details[3], details[4], details[5], details[6], details[7], details[8], details[9])
         return true
     end,
 
