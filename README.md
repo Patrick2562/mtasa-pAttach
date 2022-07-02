@@ -139,6 +139,32 @@ bool isAttached(element Element)
 **Returns:** Returns true if element is already attached, false otherwise.
 
 
+## **setDetails**
+\- This function set details of attached element.
+
+```
+bool setDetails(element Element [, element Ped = currentPed, int/string Bone = currentBone, float xPosOffset = currentXPosOffset, float yPosOffset = currentYPosOffset, float zPosOffset = currentZPosOffset, float xRotOffset = currentXRotOffset, float yRotOffset = currentYRotOffset, float zRotOffset = currentZRotOffset])
+```
+
+| Required arguments | Description                                                                                                   |
+| :----------------- | :------------------------------------------------------------------------------------------------------------ |
+| **Element**        | The element which you want to update.                                                                         |
+
+*NOTE: Use 'false' if you don't want to modify the current value.*
+| Optional arguments | Description                                                                                                   |
+| :----------------- | :------------------------------------------------------------------------------------------------------------ |
+| **Ped**            | New ped or player which you want to attach element to.                                                        |
+| **Bone**           | New number (or name what you can find below) of the ped or player's bone which you want to attach element to. |
+| **xPosOffset**     | New X position offset.                                                                                        |
+| **yPosOffset**     | New Y position offset.                                                                                        |
+| **zPosOffset**     | New Z position offset.                                                                                        |
+| **xRotOffset**     | New X rotation offset.                                                                                        |
+| **yRotOffset**     | New Y rotation offset.                                                                                        |
+| **zRotOffset**     | New Z rotation offset.                                                                                        |
+
+**Returns:** Returns true if details was successfully changed, false otherwise. (only on client side)
+
+
 ## **getDetails**
 \- This function gets details of attached element.
 
@@ -151,6 +177,36 @@ table getDetails(element Element)
 | **Element**        | Element which you want to check. |
 
 **Returns:** Returns table with details (value order same as attach function's parameters, starts from Ped) if element exists and attached, false otherwise.
+
+
+## **setPed**
+\- This function set ped or player which you want to attach element to.
+
+```
+bool setPed(element Element, element Ped)
+```
+
+| Required arguments | Description                                            |
+| :----------------- | :----------------------------------------------------- |
+| **Element**        | Element which you want to update.                      |
+| **Ped**            | The ped or player which you want to attach element to. |
+
+**Returns:** Returns true if ped was successfully changed, false otherwise. (only on client side)
+
+
+## **setBone**
+\- This function set bone which you want to attach element to.
+
+```
+bool setBone(element Element, int/string Bone)
+```
+
+| Required arguments | Description                                                                                                   |
+| :----------------- | :------------------------------------------------------------------------------------------------------------ |
+| **Element**        | Element which you want to update.                                                                             |
+| **Bone**           | The number (or name what you can find below) of the ped or player's bone which you want to attach element to. |
+
+**Returns:** Returns true if bone was successfully changed, false otherwise. (only on client side)
 
 
 ## **getAttacheds**
