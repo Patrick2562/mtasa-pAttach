@@ -238,8 +238,8 @@ addCommandHandler("testattach", function()
     exports.pAttach:attach(weaponLeft, localPlayer, 34, 0.02, 0.05, 0, 20, 190, 190)
 
     local hat = createObject(1265, 0, 0, 0)
-    setObjectScale(hat, 0.4)
-    exports.pAttach:attach(hat, localPlayer, "head", -0.05, -0.1, 0, 90, 0, 0)
+    setObjectScale(hat, 0.5)
+    exports.pAttach:attach(hat, localPlayer, "head", 0.1, -0.05, 0, 0, 90, 0)
 end)
 ```
  
