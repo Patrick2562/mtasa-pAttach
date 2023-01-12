@@ -467,10 +467,6 @@ boneIDNames = {
     ["weapon"]            = 24,
 }
 
-addEventHandler("onClientResourceStart", resourceRoot, function()
-    triggerServerEvent("pAttach:requestCache", resourceRoot)
-end)
-
 addEvent("pAttach:receiveCache", true)
 addEventHandler("pAttach:receiveCache", resourceRoot, function(cache)
     for _, data in pairs(cache) do

@@ -180,15 +180,10 @@ else
         return list
     end
 
-
-    function requestCache()
-        if isElement(client) then
-            triggerClientEvent(client, "pAttach:receiveCache", resourceRoot, cache)
-        end
-    end
-    addEvent("pAttach:requestCache", true)
-    addEventHandler("pAttach:requestCache", resourceRoot, requestCache)
-
+    addEventHandler("onPlayerResourceStart", root, function(res)
+        if res ~= resource then return end
+        triggerClientEvent(source, "pAttach:receiveCache", resourceRoot, cache)
+    end)
 
     addEventHandler("onPlayerQuit", root, function()
         detachAll(source)
