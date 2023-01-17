@@ -1,26 +1,26 @@
 <meta>
-	<info author="!Patrick" name="pAttach" type="script" version="1.2.0"/>
-	<min_mta_version client="1.5.8-0.20837" />
-	<oop>true</oop>
-	
-	<aclrequest>
-		<right name="function.fetchRemote" access="true"/>
-	</aclrequest>
+    <info author="!Patrick" name="pAttach" type="script" version="1.2.0"/>
+    <min_mta_version server="1.5.8-9.20957" client="1.5.8-9.20837" />
+    <oop>true</oop>
+    
+    <aclrequest>
+        <right name="function.fetchRemote" access="true"/>
+    </aclrequest>
 
-	<script src="updatecheck.lua" type="server" />
-	<script src="client.lua"      type="client" />
-	<script src="exports.lua"     type="shared" />
+    <script src="updatecheck.lua" type="server" />
+    <script src="client.lua"      type="client" />
+    <script src="exports.lua"     type="shared" />
 
-	<export function="attach"            type="shared" />
-	<export function="detach"            type="shared" />
-	<export function="detachAll"         type="shared" />
-	<export function="setPositionOffset" type="shared" />
-	<export function="setRotationOffset" type="shared" />
-	<export function="setPed"            type="shared" />
-	<export function="setBone"           type="shared" />
-	<export function="isAttached"        type="shared" />
-	<export function="setDetails"        type="shared" />
-	<export function="getDetails"        type="shared" />
-	<export function="invisibleAll"      type="shared" />
-	<export function="getAttacheds"      type="shared" />
+    <export function="attach"            type="shared" />
+    <export function="detach"            type="shared" />
+    <export function="detachAll"         type="shared" />
+    <export function="setPositionOffset" type="shared" />
+    <export function="setRotationOffset" type="shared" />
+    <export function="setPed"            type="shared" />
+    <export function="setBone"           type="shared" />
+    <export function="isAttached"        type="shared" />
+    <export function="setDetails"        type="shared" />
+    <export function="getDetails"        type="shared" />
+    <export function="invisibleAll"      type="shared" />
+    <export function="getAttacheds"      type="shared" />
 </meta>
