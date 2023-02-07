@@ -4,7 +4,7 @@ Optimized bone attach thanks to the new MTA functions/events.
 This resource doesn't match with well known bone_attach, you can not use the same parameters!
 
 
-# Documnentation
+# Documentation
 You can find the documentation on Wiki page. [(click here)](https://github.com/Patrick2562/mtasa-pAttach/wiki)
 
 
