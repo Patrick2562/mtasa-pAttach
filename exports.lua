@@ -89,18 +89,21 @@ else
 
     function attach(element, ped, boneid, ox, oy, oz, rx, ry, rz)
         assert(isElement(element), "Expected element at argument 1, got "..type(element))
+
         cache[element] = { element, ped, boneid, ox or 0, oy or 0, oz or 0, rx or 0, ry or 0, rz or 0 }
         return triggerClientEvent("pAttach:attach", resourceRoot, element, ped, boneid, ox, oy, oz, rx, ry, rz)
     end
 
     function detach(element)
         assert(isElement(element), "Expected element at argument 1, got "..type(element))
+
         cache[element] = nil
         return triggerClientEvent("pAttach:detach", resourceRoot, element)
     end
 
     function detachAll(ped)
         assert(isElement(ped), "Expected element at argument 1, got "..type(ped))
+
         for element, data in pairs(cache) do
             if data[2] == ped then
                 cache[element] = nil
@@ -111,6 +114,7 @@ else
 
     function setPositionOffset(element, x, y, z)
         assert(isElement(element), "Expected element at argument 1, got "..type(element))
+
         cache[element][4] = x or 0
         cache[element][5] = y or 0
         cache[element][6] = z or 0
@@ -119,6 +123,7 @@ else
 
     function setRotationOffset(element, x, y, z)
         assert(isElement(element), "Expected element at argument 1, got "..type(element))
+
         cache[element][7] = x or 0
         cache[element][8] = y or 0
         cache[element][9] = z or 0
@@ -167,6 +172,7 @@ else
 
     function isAttached(element)
         assert(isElement(element), "Expected element at argument 1, got "..type(element))
+
         return cache[element] and true or false
     end
 
@@ -187,6 +193,7 @@ else
 
     function getDetails(element)
         assert(isElement(element), "Expected element at argument 1, got "..type(element))
+
         return cache[element] or false
     end
 
@@ -194,6 +201,7 @@ else
         assert(isElement(ped), "Expected element at argument 1, got "..type(element))
 
         local list = {}
+        
         for element, data in pairs(cache) do
             if data[2] == ped then
                 list[ #list + 1 ] = element
@@ -204,6 +212,7 @@ else
 
     addEventHandler("onPlayerResourceStart", root, function(res)
         if res ~= resource then return end
+        
         triggerClientEvent(source, "pAttach:receiveCache", resourceRoot, cache)
     end)
 
@@ -214,6 +223,7 @@ else
     addEventHandler("onElementDestroy", root, function()
         if cache[source] then
             detach(source)
+
         elseif getElementType(source) == "ped" then
             for element, data in pairs(cache) do
                 if data[2] == source then
