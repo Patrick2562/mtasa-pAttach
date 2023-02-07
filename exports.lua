@@ -56,11 +56,17 @@ if isClientSide then
     addEvent("pAttach:setBone", true)
     addEventHandler("pAttach:setBone", resourceRoot, setBone)
 
+    function setVisible(...)
+        return pAttach:setVisible(...)
+    end
+
+    function setVisibleAll(...)
+        return pAttach:setVisibleAll(...)
+    end
+
     function invisibleAll(...)
         return pAttach:invisibleAll(...)
     end
-    addEvent("pAttach:invisibleAll", true)
-    addEventHandler("pAttach:invisibleAll", resourceRoot, invisibleAll)
 
     function isAttached(...)
         return pAttach:isAttached(...)
@@ -134,13 +140,29 @@ else
         return triggerClientEvent("pAttach:setBone", resourceRoot, element, boneid)
     end
 
-    function invisibleAll(ped, bool)
+    function setVisible(element, bool)
+        assert(isElement(element), "Expected element at argument 1, got "..type(element))
+
+        return setElementAlpha(element, bool and 255 or 0)
+    end
+
+    function setVisibleAll(ped, bool)
+        assert(isElement(ped), "Expected element at argument 1, got "..type(ped))
+
         for element, data in pairs(cache) do
+            iprint(data)
             if data[2] == ped then
-                setElementAlpha(element, bool and 0 or 255)
+                setVisible(element, bool)
             end
         end
         return true
+    end
+
+    -- deprecated
+    function invisibleAll(ped, bool)
+        assert(isElement(ped), "Expected element at argument 1, got "..type(ped))
+
+        return setVisibleAll(ped, not bool)
     end
 
     function isAttached(element)

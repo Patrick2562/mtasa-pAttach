@@ -21,6 +21,8 @@
     <export function="isAttached"        type="shared" />
     <export function="setDetails"        type="shared" />
     <export function="getDetails"        type="shared" />
+    <export function="setVisible"        type="shared" />
+    <export function="setVisibleAll"     type="shared" />
     <export function="invisibleAll"      type="shared" />
     <export function="getAttacheds"      type="shared" />
 </meta>

@@ -225,15 +225,27 @@ pAttach = {
         return true
     end,
 
-    invisibleAll = function(self, ped, bool)
+    setVisible = function(self, element, bool)
+        assert(isElement(element), "Expected element at argument 1, got "..type(ped))
+        if not self:isAttached(element) then return false end
+
+        return setAlpha(element, bool and 255 or 0)
+    end,
+
+    setVisibleAll = function(self, ped, bool)
         assert(isElement(ped), "Expected element at argument 1, got "..type(ped))
 
         if self.pedInstances[ped] then
             for element in pairs(self.pedInstances[ped].list) do
-                setAlpha(element, bool and 0 or 255)
+                self:setVisible(element, bool)
             end
         end
         return true
+    end,
+
+    -- deprecated
+    invisibleAll = function(self, ped, bool)
+        self:setVisibleAll(ped, not bool)
     end,
 
     addToStream = function(self, ped)
