@@ -43,4 +43,4 @@ end)
 <img src="https://i.imgur.com/8QLhKrv.png">
 
 # Known issues
-\- There are desynchronization problems when attaching a player to ped or player.
+\- There are desynchronization problems when attaching a ped to player.
