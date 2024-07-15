@@ -14,6 +14,12 @@
 local isClientSide = isElement(localPlayer)
 
 if isClientSide then
+    function setCollisionToggleEnabled(...)
+        return pAttach:setCollisionToggleEnabled(...)
+    end
+    addEvent("pAttach:setCollisionToggleEnabled", true)
+    addEventHandler("pAttach:setCollisionToggleEnabled", resourceRoot, setCollisionToggleEnabled)
+
     function attach(...)
         return pAttach:attach(...)
     end
@@ -86,6 +92,10 @@ if isClientSide then
 
 else
     local cache = {}
+
+    function setCollisionToggleEnabled(enabled)
+        return triggerClientEvent("pAttach:setCollisionToggleEnabled", resourceRoot, enabled)
+    end
 
     function attach(element, ped, boneid, ox, oy, oz, rx, ry, rz)
         assert(isElement(element), "Expected element at argument 1, got "..type(element))

@@ -39,8 +39,24 @@ addCommandHandler("testattach", function(player)
     exports.pAttach:attach(hat, player, "head", 0.1, -0.05, 0, 0, 90, 0)
 end)
 ```
- 
+
 <img src="https://i.imgur.com/8QLhKrv.png">
+
+\- Server sided example to attach object to player, but you are in control of element collision
+```lua
+addCommandHandler("testattach", function(player)
+    local x,y,z = getElementPosition(player)
+    local backpack = createObject(1337, x, y + 2, z)
+    exports.pAttach:setCollisionToggleEnabled(false)
+    setElementCollisionsEnabled(backpack, false)
+    setTimer(function()
+        exports.pAttach:attach(backpack, player, "backpack", 0, -0.45, 0, 0, 90, 0)
+        setTimer(function()
+            exports.pAttach:detach(backpack)
+        end, 1000, 1)
+    end, 2500, 1)
+end)
+```
 
 # Known issues
 \- There are desynchronization problems when attaching a player to ped or player.

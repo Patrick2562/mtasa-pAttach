@@ -32,7 +32,12 @@ pAttach = {
     inStreamPeds              = {},
     preparedToRenderInstances = {},
     pedsProcessedAdded        = false,
+    setCollisionsEnabled      = true,
 
+    setCollisionToggleEnabled = function(self, enabled)
+        setCollisionsEnabled = enabled and true or false
+    end,
+    
     attach = function(self, element, ped, _boneid, ox, oy, oz, rx, ry, rz)
         local boneid = boneIDNames[_boneid] or tonumber(_boneid) or false
         assert(isElement(element) and getType(element) ~= "player", "Expected element (except: player) at argument 1, got "..type(element))
@@ -43,7 +48,9 @@ pAttach = {
         setPosition(element, 0, 0, 10000)
         setDimension(element, getDimension(ped))
         setInterior(element, getInterior(ped))
-        setCollisions(element, false)
+        if setCollisionsEnabled then
+            setCollisions(element, false)
+        end
 
         local pedIns  = self.pedInstances[ped]
         local pedType = getType(ped)
@@ -120,7 +127,9 @@ pAttach = {
 
         removeEventHandler("onClientElementDestroy", element, self.onElementDestroy)
         self.instances[element] = nil
-        setCollisions(element, true)
+        if setCollisionsEnabled then
+            setCollisions(element, true)
+        end
         return true
     end,
 

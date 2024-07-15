@@ -25,4 +25,5 @@
     <export function="setVisibleAll"     type="shared" />
     <export function="invisibleAll"      type="shared" />
     <export function="getAttacheds"      type="shared" />
+    <export function="setCollisionToggleEnabled"      type="shared" />
 </meta>
