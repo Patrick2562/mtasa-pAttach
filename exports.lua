@@ -14,11 +14,11 @@
 local isClientSide = isElement(localPlayer)
 
 if isClientSide then
-    function setCollisionToggleEnabled(...)
-        return pAttach:setCollisionToggleEnabled(...)
+    function setConfigOption(...)
+        return pAttach:setConfigOption(...)
     end
-    addEvent("pAttach:setCollisionToggleEnabled", true)
-    addEventHandler("pAttach:setCollisionToggleEnabled", resourceRoot, setCollisionToggleEnabled)
+    addEvent("pAttach:setConfigOption", true)
+    addEventHandler("pAttach:setConfigOption", resourceRoot, setConfigOption)
 
     function attach(...)
         return pAttach:attach(...)
@@ -93,8 +93,8 @@ if isClientSide then
 else
     local cache = {}
 
-    function setCollisionToggleEnabled(enabled)
-        return triggerClientEvent("pAttach:setCollisionToggleEnabled", resourceRoot, enabled)
+    function setConfigOption(name, value)
+        return triggerClientEvent("pAttach:setConfigOption", resourceRoot, name, value)
     end
 
     function attach(element, ped, boneid, ox, oy, oz, rx, ry, rz)

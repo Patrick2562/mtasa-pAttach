@@ -32,10 +32,12 @@ pAttach = {
     inStreamPeds              = {},
     preparedToRenderInstances = {},
     pedsProcessedAdded        = false,
-    setCollisionsEnabled      = true,
+    options                   = {
+        toggleCollision = true,
+    },
 
-    setCollisionToggleEnabled = function(self, enabled)
-        setCollisionsEnabled = enabled and true or false
+    setConfigOption = function(self, name, value)
+        self.options[name] = value
     end,
     
     attach = function(self, element, ped, _boneid, ox, oy, oz, rx, ry, rz)
@@ -48,7 +50,7 @@ pAttach = {
         setPosition(element, 0, 0, 10000)
         setDimension(element, getDimension(ped))
         setInterior(element, getInterior(ped))
-        if setCollisionsEnabled then
+        if pAttach.options["toggleCollision"] then
             setCollisions(element, false)
         end
 
@@ -127,7 +129,7 @@ pAttach = {
 
         removeEventHandler("onClientElementDestroy", element, self.onElementDestroy)
         self.instances[element] = nil
-        if setCollisionsEnabled then
+        if self.options["toggleCollision"] then
             setCollisions(element, true)
         end
         return true
