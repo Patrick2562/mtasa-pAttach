@@ -37,6 +37,10 @@ pAttach = {
     },
 
     setConfigOption = function(self, name, value)
+        assert(name == "toggleCollision", "Expected valid option ('toggleCollision') at argument 1, got "..tostring(name))
+        if(name == "toggleCollision")then
+            assert(type(value) == "boolean", "Expected boolean at argument 2, got "..type(name))
+        end
         self.options[name] = value
     end,
     

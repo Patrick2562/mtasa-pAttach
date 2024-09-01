@@ -94,6 +94,10 @@ else
     local cache = {}
 
     function setConfigOption(name, value)
+        assert(name == "toggleCollision", "Expected valid option ('toggleCollision') at argument 1, got "..tostring(name))
+        if(name == "toggleCollision")then
+            assert(type(value) == "boolean", "Expected boolean at argument 2, got "..type(name))
+        end
         return triggerClientEvent("pAttach:setConfigOption", resourceRoot, name, value)
     end
 
