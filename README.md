@@ -28,10 +28,10 @@ addCommandHandler("testattach", function(player)
     local backpack = createObject(371, 0, 0, 0)
     exports.pAttach:attach(backpack, player, "backpack", 0, -0.15, 0, 0, 90, 0)
 
-    local weaponRight = createObject(3965, 0, 0, 0)
+    local weaponRight = createObject(356, 0, 0, 0)
     exports.pAttach:attach(weaponRight, player, "weapon")
 
-    local weaponLeft = createObject(3965, 0, 0, 0)
+    local weaponLeft = createObject(356, 0, 0, 0)
     exports.pAttach:attach(weaponLeft, player, 34, 0.02, 0.05, 0, 20, 190, 190)
 
     local hat = createObject(1265, 0, 0, 0)

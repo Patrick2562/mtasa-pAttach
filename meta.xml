@@ -1,5 +1,5 @@
 <meta>
-    <info author="!Patrick" name="pAttach" type="script" version="1.2.2"/>
+    <info author="Patrick" name="pAttach" type="script" version="1.2.3" />
     <min_mta_version server="1.5.8-9.20957" client="1.5.8-9.20837" />
     <oop>true</oop>
     
@@ -7,9 +7,11 @@
         <right name="function.fetchRemote" access="true"/>
     </aclrequest>
 
-    <script src="updatecheck.lua" type="server" />
-    <script src="client.lua"      type="client" />
-    <script src="exports.lua"     type="shared" />
+    <script src="config.lua"      type="shared" />
+    <script src="update.lua"      type="server" />
+    <script src="src/pAttach.lua" type="client" />
+    <script src="src/client.lua"  type="client" />
+    <script src="src/server.lua"  type="server" />
 
     <export function="attach"            type="shared" />
     <export function="detach"            type="shared" />
@@ -23,7 +25,6 @@
     <export function="getDetails"        type="shared" />
     <export function="setVisible"        type="shared" />
     <export function="setVisibleAll"     type="shared" />
-    <export function="invisibleAll"      type="shared" />
     <export function="getAttacheds"      type="shared" />
     <export function="setConfigOption"   type="shared" />
 </meta>

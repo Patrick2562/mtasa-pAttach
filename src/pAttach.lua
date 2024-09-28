@@ -32,26 +32,26 @@ pAttach = {
     inStreamPeds              = {},
     preparedToRenderInstances = {},
     pedsProcessedAdded        = false,
-
-    setConfigOption = function(self, name, value)
-        assert(name == "toggleCollision", "Expected valid option ('toggleCollision') at argument 1, got "..tostring(name))
-        if(name == "toggleCollision")then
-            assert(type(value) == "boolean", "Expected boolean at argument 2, got "..type(name))
-        end
-        options[name] = value
-    end,
     
-    attach = function(self, element, ped, _boneid, ox, oy, oz, rx, ry, rz)
-        local boneid = boneIDNames[_boneid] or tonumber(_boneid) or false
+    attach = function(self, element, ped, bone, ox, oy, oz, rx, ry, rz)
+        local boneid = boneNames[bone] or tonumber(bone) or false
         assert(isElement(element) and getType(element) ~= "player", "Expected element (except: player) at argument 1, got "..type(element))
         assert(isElement(ped), "Expected element at argument 2, got "..type(ped))
-        assert(boneid and boneIDs[boneid], "Expected valid bone-id or bone-name at argument 3, got "..tostring(_boneid)..". Check available bones in README.md")
-        if self:isAttached(element) then return false end
+        assert(boneid and boneIDs[boneid], "Expected valid bone-id or bone-name at argument 3, got "..tostring(bone)..". Check available bones in README.md")
+        
+        if self:isAttached(element) then
+            return false
+        end
 
         setPosition(element, 0, 0, 10000)
-        setDimension(element, getDimension(ped))
-        setInterior(element, getInterior(ped))
-        if options["toggleCollision"] then
+
+        if OPTIONS["dimensionChanges"] then
+            setDimension(element, getDimension(ped))
+        end
+        if OPTIONS["interiorChanges"] then
+            setInterior(element, getInterior(ped))
+        end
+        if OPTIONS["toggleCollisions"] then
             setCollisions(element, false)
         end
 
@@ -59,18 +59,28 @@ pAttach = {
         local pedType = getType(ped)
 
         if not pedIns then
-            pedIns = { count = 1, pedType = pedType, list = {} }
+            pedIns = {
+                count   = 1,
+                pedType = pedType,
+                list    = {}
+            }
             self.pedInstances[ped] = pedIns
 
             if ped ~= localPlayer then
-                addEventHandler("onClientElementStreamIn",    ped, self.onStreamIn)
-                addEventHandler("onClientElementStreamOut",   ped, self.onStreamOut)
+                addEventHandler("onClientElementStreamIn", ped, self.onStreamIn)
+                addEventHandler("onClientElementStreamOut", ped, self.onStreamOut)
                 if pedType == "ped" then
                     addEventHandler("onClientElementDestroy", ped, self.onPedDestroy)
                 end
             end
-            addEventHandler("onClientElementDimensionChange", ped, self.onDimensionChange)
-            addEventHandler("onClientElementInteriorChange",  ped, self.onInteriorChange)
+
+            if OPTIONS["dimensionChanges"] then
+                addEventHandler("onClientElementDimensionChange", ped, self.onDimensionChange)
+            end
+            if OPTIONS["interiorChanges"] then
+                addEventHandler("onClientElementInteriorChange", ped, self.onInteriorChange)
+            end
+
         else
             pedIns.count = pedIns.count + 1
         end
@@ -79,7 +89,7 @@ pAttach = {
             element = element,
             ped     = ped,
             boneid  = boneid,
-            _boneid = _boneid,
+            bone    = bone,
             ox      = ox or 0,
             oy      = oy or 0,
             oz      = oz or 0,
@@ -99,11 +109,14 @@ pAttach = {
         end
 
         addEventHandler("onClientElementDestroy", element, self.onElementDestroy)
+
         return true
     end,
 
     detach = function(self, element)
-        if not self:isAttached(element) then return false end
+        if not self:isAttached(element) then
+            return false
+        end
 
         local ped    = self.instances[element]
         local pedIns = self.pedInstances[ped]
@@ -112,12 +125,12 @@ pAttach = {
 
         if pedIns.count == 0 then
             if isElement(ped) then
-                removeEventHandler("onClientElementStreamIn",        ped, self.onStreamIn)
-                removeEventHandler("onClientElementStreamOut",       ped, self.onStreamOut)
+                removeEventHandler("onClientElementStreamIn", ped, self.onStreamIn)
+                removeEventHandler("onClientElementStreamOut", ped, self.onStreamOut)
                 removeEventHandler("onClientElementDimensionChange", ped, self.onDimensionChange)
-                removeEventHandler("onClientElementInteriorChange",  ped, self.onInteriorChange)
+                removeEventHandler("onClientElementInteriorChange", ped, self.onInteriorChange)
                 if pedIns.pedType == "ped" then
-                    removeEventHandler("onClientElementDestroy",     ped, self.onPedDestroy)
+                    removeEventHandler("onClientElementDestroy", ped, self.onPedDestroy)
                 end
             end
             self.pedInstances[ped] = nil
@@ -130,9 +143,11 @@ pAttach = {
 
         removeEventHandler("onClientElementDestroy", element, self.onElementDestroy)
         self.instances[element] = nil
-        if options["toggleCollision"] then
+
+        if OPTIONS["toggleCollisions"] then
             setCollisions(element, true)
         end
+
         return true
     end,
 
@@ -144,6 +159,7 @@ pAttach = {
                 self:detach(element)
             end
         end
+
         return true
     end,
 
@@ -151,25 +167,41 @@ pAttach = {
         return (element and self.instances[element]) and true or false
     end,
 
-    setDetails = function(self, element, ped, _boneid, ox, oy, oz, rx, ry, rz)
+    setDetails = function(self, element, ped, bone, ox, oy, oz, rx, ry, rz)
         assert(isElement(element), "Expected element at argument 1, got "..type(element))
-        if not self:isAttached(element) then return false end
+        
+        if not self:isAttached(element) then
+            return false
+        end
         
         local details = self:getDetails(element)
 
-        if ped then self:setPed(element, ped) end
-        if _boneid then self:setBone(element, _boneid) end
+        if ped then
+            self:setPed(element, ped)
+        end
+        if bone then
+            self:setBone(element, bone)
+        end
         self:setPositionOffset(element, ox or details[4], oy or details[5], oz or details[6])
         self:setRotationOffset(element, rx or details[7], ry or details[8], rz or details[9])
+
         return true
     end,
     
     getDetails = function(self, element)
         assert(isElement(element), "Expected element at argument 1, got "..type(element))
-        if not self:isAttached(element) then return false end
+        
+        if not self:isAttached(element) then
+            return false
+        end
         
         local v = self.pedInstances[self.instances[element]].list[element]
-        return v and { v.element, v.ped, v._boneid, v.ox, v.oy, v.oz, v.rx, v.ry, v.rz } or false
+
+        if v then
+            return { v.element, v.ped, v.bone, v.ox, v.oy, v.oz, v.rx, v.ry, v.rz }
+        end
+
+        return false
     end,
 
     getAttacheds = function(self, ped)
@@ -181,12 +213,16 @@ pAttach = {
                 list[ #list + 1 ] = element
             end
         end
+
         return list
     end,
 
     setPositionOffset = function(self, element, x, y, z)
         assert(isElement(element), "Expected element at argument 1, got "..type(element))
-        if not self:isAttached(element) then return false end
+        
+        if not self:isAttached(element) then
+            return false
+        end
 
         local ped = self.instances[element]
         local ins = self.pedInstances[ped].list[element]
@@ -194,12 +230,16 @@ pAttach = {
         ins.ox = x or 0
         ins.oy = y or 0
         ins.oz = z or 0
+
         return true
     end,
 
     setRotationOffset = function(self, element, x, y, z)
         assert(isElement(element), "Expected element at argument 1, got "..type(element))
-        if not self:isAttached(element) then return false end
+        
+        if not self:isAttached(element) then
+            return false
+        end
 
         local ped = self.instances[element]
         local ins = self.pedInstances[ped].list[element]
@@ -208,38 +248,50 @@ pAttach = {
         ins.ry = y or 0
         ins.rz = z or 0
         ins.rotMat = self:calculateRotMat(x or 0, y or 0, z or 0)
+
         return true
     end,
 
-    setBone = function(self, element, _boneid)
-        local boneid = boneIDNames[_boneid] or tonumber(_boneid) or false
+    setBone = function(self, element, bone)
+        local boneid = boneNames[bone] or tonumber(bone) or false
         assert(isElement(element), "Expected element at argument 1, got "..type(element))
-        assert(boneid and boneIDs[boneid], "Expected valid bone-id or bone-name at argument 2, got "..tostring(_boneid)..". Check available bones in README.md")
-        if not self:isAttached(element) then return false end
+        assert(boneid and boneIDs[boneid], "Expected valid bone-id or bone-name at argument 2, got "..tostring(bone)..". Check available bones in README.md")
+        
+        if not self:isAttached(element) then
+            return false
+        end
 
         local ped = self.instances[element]
         local ins = self.pedInstances[ped].list[element]
 
-        ins._boneid = _boneid
-        ins.boneid  = boneid
+        ins.bone   = bone
+        ins.boneid = boneid
+
         return true
     end,
 
     setPed = function(self, element, ped)
         assert(isElement(element), "Expected element at argument 1, got "..type(element))
         assert(isElement(ped), "Expected element at argument 2, got "..type(ped))
-        if not self:isAttached(element) then return false end
+        
+        if not self:isAttached(element) then
+            return false
+        end
 
         local details = self:getDetails(element)
 
         self:detach(element)
         self:attach(element, ped, details[3], details[4], details[5], details[6], details[7], details[8], details[9])
+
         return true
     end,
 
     setVisible = function(self, element, bool)
         assert(isElement(element), "Expected element at argument 1, got "..type(ped))
-        if not self:isAttached(element) then return false end
+
+        if not self:isAttached(element) then
+            return false
+        end
 
         return setAlpha(element, bool and 255 or 0)
     end,
@@ -252,22 +304,30 @@ pAttach = {
                 self:setVisible(element, bool)
             end
         end
+
         return true
     end,
 
-    -- deprecated
-    invisibleAll = function(self, ped, bool)
-        self:setVisibleAll(ped, not bool)
+    setConfigOption = function(self, name, value)
+        assert(OPTIONS[name] ~= nil, "Expected valid option at argument 1, got "..tostring(name))
+        assert(type(value) == "boolean", "Expected boolean at argument 2, got "..type(value))
+
+        OPTIONS[name] = value
+
+        return true
     end,
 
     addToStream = function(self, ped)
         if not self.inStreamPeds[ped] then
             self.inStreamPeds[ped] = true
+
             if self.pedInstances[ped] then
                 self:refreshRender()
             end
+
             return true
         end
+
         return false
     end,
 
@@ -278,10 +338,13 @@ pAttach = {
                     setPosition(element, 0, 0, 10000)
                 end
             end
+
             self.inStreamPeds[ped] = nil
             self:refreshRender()
+
             return true
         end
+
         return false
     end,
 
@@ -333,10 +396,12 @@ pAttach = {
         if len > 0 and not self.pedsProcessedAdded then
             addEventHandler("onClientPedsProcessed", root, self.onPedsProcessed)
             self.pedsProcessedAdded = true
+
         elseif len == 0 and self.pedsProcessedAdded then
             removeEventHandler("onClientPedsProcessed", root, self.onPedsProcessed)
             self.pedsProcessedAdded = false
         end
+
         return true
     end,
 
@@ -345,6 +410,7 @@ pAttach = {
         local syaw,   cyaw   = sin(rx), cos(rx)
         local spitch, cpitch = sin(ry), cos(ry)
         local sroll,  croll  = sin(rz), cos(rz)
+        
         return {
             { cpitch*croll - spitch*syaw*sroll, cpitch*sroll + spitch*syaw*croll, -spitch*cyaw },
             { -cyaw*sroll, cyaw*croll, syaw },
@@ -413,6 +479,7 @@ pAttach = {
                             1
                         }
                     })
+                    
                     data.prevOutOfScreen = false
                 end
 
@@ -425,77 +492,3 @@ pAttach = {
         end
     end
 }
-
-boneIDs = {
-    [1]  = true,
-    [2]  = true,
-    [3]  = true,
-    [4]  = true,
-    [5]  = true,
-    [6]  = true,
-    [7]  = true,
-    [8]  = true,
-    [21] = true,
-    [22] = true,
-    [23] = true,
-    [24] = true,
-    [25] = true,
-    [26] = true,
-    [31] = true,
-    [32] = true,
-    [33] = true,
-    [34] = true,
-    [35] = true,
-    [36] = true,
-    [41] = true,
-    [42] = true,
-    [43] = true,
-    [44] = true,
-    [51] = true,
-    [52] = true,
-    [53] = true,
-    [54] = true,
-}
-
-boneIDNames = {
-    ["pelvis"]            = 1,
-    ["pelvis2"]           = 2,
-    ["spine"]             = 3,
-    ["neck"]              = 4,
-    ["head"]              = 5,
-    ["head2"]             = 6,
-    ["head3"]             = 7,
-    ["jaw"]               = 8,
-    ["right-upper-torso"] = 21,
-    ["right-shoulder"]    = 22,
-    ["right-elbow"]       = 23,
-    ["right-wrist"]       = 24,
-    ["right-hand"]        = 25,
-    ["right-thumb"]       = 26,
-    ["left-upper-torso"]  = 31,
-    ["left-shoulder"]     = 32,
-    ["left-elbow"]        = 33,
-    ["left-wrist"]        = 34,
-    ["left-hand"]         = 35,
-    ["left-thumb"]        = 36,
-    ["left-hip"]          = 41,
-    ["left-knee"]         = 42,
-    ["left-tankle"]       = 43,
-    ["left-foot"]         = 44,
-    ["right-hip"]         = 51,
-    ["right-knee"]        = 52,
-    ["right-tankle"]      = 53,
-    ["right-foot"]        = 54,
-    -- extra
-    ["backpack"]          = 3,
-    ["weapon"]            = 24,
-}
-
-addEvent("pAttach:receiveCache", true)
-addEventHandler("pAttach:receiveCache", resourceRoot, function(_cache, _options)
-    for _, data in pairs(_cache) do
-        pAttach:attach(unpack(data))
-    end
-
-    options = _options
-end)
