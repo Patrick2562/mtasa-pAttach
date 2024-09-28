@@ -39,7 +39,7 @@ addCommandHandler("testattach", function(player)
     exports.pAttach:attach(hat, player, "head", 0.1, -0.05, 0, 0, 90, 0)
 end)
 ```
- 
+
 <img src="https://i.imgur.com/8QLhKrv.png">
 
 # Known issues

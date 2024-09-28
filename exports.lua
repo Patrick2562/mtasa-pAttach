@@ -11,6 +11,10 @@
  -- https://mtasa.com/discord
 ]]
 
+options = {
+    toggleCollision = true
+}
+
 local isClientSide = isElement(localPlayer)
 
 if isClientSide then
@@ -55,6 +59,12 @@ if isClientSide then
     end
     addEvent("pAttach:setBone", true)
     addEventHandler("pAttach:setBone", resourceRoot, setBone)
+
+    function setConfigOption(...)
+        return pAttach:setConfigOption(...)
+    end
+    addEvent("pAttach:setConfigOption", true)
+    addEventHandler("pAttach:setConfigOption", resourceRoot, setConfigOption)
 
     function setVisible(...)
         return pAttach:setVisible(...)
@@ -145,6 +155,16 @@ else
         return triggerClientEvent("pAttach:setBone", resourceRoot, element, boneid)
     end
 
+    function setConfigOption(name, value)
+        assert(name == "toggleCollision", "Expected valid option ('toggleCollision') at argument 1, got "..tostring(name))
+        if(name == "toggleCollision")then
+            assert(type(value) == "boolean", "Expected boolean at argument 2, got "..type(name))
+        end
+
+        options[name] = value
+        return triggerClientEvent("pAttach:setConfigOption", resourceRoot, name, value)
+    end
+
     function setVisible(element, bool)
         assert(isElement(element), "Expected element at argument 1, got "..type(element))
 
@@ -213,7 +233,7 @@ else
     addEventHandler("onPlayerResourceStart", root, function(res)
         if res ~= resource then return end
         
-        triggerClientEvent(source, "pAttach:receiveCache", resourceRoot, cache)
+        triggerClientEvent(source, "pAttach:receiveCache", resourceRoot, cache, options)
     end)
 
     addEventHandler("onPlayerQuit", root, function()

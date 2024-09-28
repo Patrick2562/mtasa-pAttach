@@ -33,6 +33,14 @@ pAttach = {
     preparedToRenderInstances = {},
     pedsProcessedAdded        = false,
 
+    setConfigOption = function(self, name, value)
+        assert(name == "toggleCollision", "Expected valid option ('toggleCollision') at argument 1, got "..tostring(name))
+        if(name == "toggleCollision")then
+            assert(type(value) == "boolean", "Expected boolean at argument 2, got "..type(name))
+        end
+        options[name] = value
+    end,
+    
     attach = function(self, element, ped, _boneid, ox, oy, oz, rx, ry, rz)
         local boneid = boneIDNames[_boneid] or tonumber(_boneid) or false
         assert(isElement(element) and getType(element) ~= "player", "Expected element (except: player) at argument 1, got "..type(element))
@@ -43,7 +51,9 @@ pAttach = {
         setPosition(element, 0, 0, 10000)
         setDimension(element, getDimension(ped))
         setInterior(element, getInterior(ped))
-        setCollisions(element, false)
+        if options["toggleCollision"] then
+            setCollisions(element, false)
+        end
 
         local pedIns  = self.pedInstances[ped]
         local pedType = getType(ped)
@@ -120,7 +130,9 @@ pAttach = {
 
         removeEventHandler("onClientElementDestroy", element, self.onElementDestroy)
         self.instances[element] = nil
-        setCollisions(element, true)
+        if options["toggleCollision"] then
+            setCollisions(element, true)
+        end
         return true
     end,
 
@@ -480,8 +492,10 @@ boneIDNames = {
 }
 
 addEvent("pAttach:receiveCache", true)
-addEventHandler("pAttach:receiveCache", resourceRoot, function(cache)
-    for _, data in pairs(cache) do
+addEventHandler("pAttach:receiveCache", resourceRoot, function(_cache, _options)
+    for _, data in pairs(_cache) do
         pAttach:attach(unpack(data))
     end
+
+    options = _options
 end)
