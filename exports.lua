@@ -11,15 +11,13 @@
  -- https://mtasa.com/discord
 ]]
 
+options = {
+    toggleCollision = true
+}
+
 local isClientSide = isElement(localPlayer)
 
 if isClientSide then
-    function setConfigOption(...)
-        return pAttach:setConfigOption(...)
-    end
-    addEvent("pAttach:setConfigOption", true)
-    addEventHandler("pAttach:setConfigOption", resourceRoot, setConfigOption)
-
     function attach(...)
         return pAttach:attach(...)
     end
@@ -62,6 +60,12 @@ if isClientSide then
     addEvent("pAttach:setBone", true)
     addEventHandler("pAttach:setBone", resourceRoot, setBone)
 
+    function setConfigOption(...)
+        return pAttach:setConfigOption(...)
+    end
+    addEvent("pAttach:setConfigOption", true)
+    addEventHandler("pAttach:setConfigOption", resourceRoot, setConfigOption)
+
     function setVisible(...)
         return pAttach:setVisible(...)
     end
@@ -92,14 +96,6 @@ if isClientSide then
 
 else
     local cache = {}
-
-    function setConfigOption(name, value)
-        assert(name == "toggleCollision", "Expected valid option ('toggleCollision') at argument 1, got "..tostring(name))
-        if(name == "toggleCollision")then
-            assert(type(value) == "boolean", "Expected boolean at argument 2, got "..type(name))
-        end
-        return triggerClientEvent("pAttach:setConfigOption", resourceRoot, name, value)
-    end
 
     function attach(element, ped, boneid, ox, oy, oz, rx, ry, rz)
         assert(isElement(element), "Expected element at argument 1, got "..type(element))
@@ -157,6 +153,16 @@ else
 
         cache[element][3] = boneid
         return triggerClientEvent("pAttach:setBone", resourceRoot, element, boneid)
+    end
+
+    function setConfigOption(name, value)
+        assert(name == "toggleCollision", "Expected valid option ('toggleCollision') at argument 1, got "..tostring(name))
+        if(name == "toggleCollision")then
+            assert(type(value) == "boolean", "Expected boolean at argument 2, got "..type(name))
+        end
+
+        options[name] = value
+        return triggerClientEvent("pAttach:setConfigOption", resourceRoot, name, value)
     end
 
     function setVisible(element, bool)
@@ -227,7 +233,7 @@ else
     addEventHandler("onPlayerResourceStart", root, function(res)
         if res ~= resource then return end
         
-        triggerClientEvent(source, "pAttach:receiveCache", resourceRoot, cache)
+        triggerClientEvent(source, "pAttach:receiveCache", resourceRoot, cache, options)
     end)
 
     addEventHandler("onPlayerQuit", root, function()
