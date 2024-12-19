@@ -77,6 +77,8 @@ end
 function setDetails(...)
     return pAttach:setDetails(...)
 end
+addEvent("pAttach:setDetails", true)
+addEventHandler("pAttach:setDetails", resourceRoot, setDetails)
 
 function getDetails(...)
     return pAttach:getDetails(...)
