@@ -106,7 +106,6 @@ function setVisibleAll(ped, bool)
     assert(isElement(ped), "Expected element at argument 1, got "..type(ped))
 
     for element, data in pairs(CACHE) do
-        iprint(data)
         if data[2] == ped then
             setVisible(element, bool)
         end
