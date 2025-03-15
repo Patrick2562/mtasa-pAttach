@@ -43,8 +43,6 @@ pAttach = {
             return false
         end
 
-        setPosition(element, 0, 0, 10000)
-
         if OPTIONS["dimensionChanges"] then
             setDimension(element, getDimension(ped))
         end
